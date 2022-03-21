@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd" default-lazy-init="true">
+
+    <!--测试迟加载-->
+    <bean name="userService6" class="com.teledu.service.impl.UserServiceImpl6" autowire="byType"
+           init-method="init" destroy-method="destroy" lazy-init="false">
+    </bean>
+    <bean name="userDao" class="com.teledu.dao.impl.UserDaoImpl"/>
+    <bean name="userService" class="com.teledu.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"/>
+        <property name="age" value="18"/>
+        <property name="strList">
+            <list>
+                <value>李白</value>
+                <value>杜甫</value>
+            </list>
+        </property>
+        <property name="strSet">
+            <set>
+                <value>1</value>
+                <value>1</value>
+                <value>1</value>
+            </set>
+        </property>
+        <property name="strMap">
+            <map>
+                <entry key="1" value="李白"/>
+                <entry key="1" value="杜甫"/>
+                <entry key="2" value="杜甫"/>
+            </map>
+        </property>
+    </bean>
+    <bean name="userService1" class="com.teledu.service.impl.UserServiceImpl1">
+        <constructor-arg ref="userDao"/>
+    </bean>
+<!--    singleton 只会创建一个对象，单例模式-->
+<!--    prototype 每次都会创建一个对象给请求方-->
+    <bean name="userService2" class="com.teledu.service.impl.UserServiceImpl2" scope="prototype">
+        <constructor-arg ref="userDao"/>
+    </bean>
+
+    <bean name="userService3" class="com.teledu.service.impl.UserServiceImpl3" autowire="byName">
+    </bean>
+    <bean name="userService4" class="com.teledu.service.impl.UserServiceImpl4" autowire="byType">
+    </bean>
+<!--    init-method指定初始化方法-->
+<!--    destroy-method指定销毁方法-->
+    <bean name="userService5" class="com.teledu.service.impl.UserServiceImpl5" autowire="byType"
+    init-method="init" destroy-method="destroy">
+    </bean>
+
+
+
+</beans>
